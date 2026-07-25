@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'actividad',
     'usuario',
     'reporte',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
