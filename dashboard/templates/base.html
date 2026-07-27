@@ -1,0 +1,63 @@
+{% load tailwind_tags %}
+{% load static %}
+{% tailwind_css %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}GELICO{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+    <script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    {% block extra_head %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/select2-daisy.css' %}">
+  </head>
+  <body>
+
+  <div class="drawer lg:drawer-open">
+    <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+    <script src="{% static 'js/htmx.min.js' %}"></script>
+    <!-- ===== MAIN CONTENT SIDE ===== -->
+    <div class="drawer-content flex flex-col min-h-screen">
+
+      <!-- Navbar -->
+      <nav class="navbar w-full bg-base-100 shadow-md">
+        <div class="flex-1 flex items-center">
+          <label for="main-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round"
+                stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4">
+              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+              <path d="M9 4v16"></path>
+              <path d="M14 10l2 2l-2 2"></path>
+            </svg>
+          </label>
+          <div class="px-4 font-bold"><a href="{% url 'dashboard' %}">SICEI</a></div>
+        </div>
+        <div class="flex-none flex items-center gap-2 px-4">
+          <span class="text-sm text-base-content/60">{{ request.user.username }}</span>
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('modal_logout').showModal()">
+            Cerrar Sesión
+          </button>
+        </div>
+      </nav>
+
+      
+      <!-- Page content -->
+      <div class="p-4">
+        {% include "partials/base/_breadcrumbs.html" %}
+        {% block content %}{% endblock %}
+      </div>
+
+    </div>
+
+    <!-- ===== SIDEBAR SIDE ===== -->
+    {% include 'partials/base/_sidebar.html' %}
+
+  </div>
+
+  {% include 'partials/base/_logout.html' %}
+  {% include 'partials/base/_messages.html' %}
+
+  
+  </body>
+</html>
