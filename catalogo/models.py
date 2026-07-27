@@ -1,83 +1,70 @@
 from django.db import models
 
-# Create your models here.
-class CatalogoParticipante(models.Model):
-    nombre = models.CharField(max_length=250)
+
+class CatalogoBase(models.Model):
+    """Clase base abstracta para catálogos simples (nombre + representación en texto).
+
+    Evita repetir el mismo patrón (CharField + Meta + __str__) en cada catálogo.
+    """
+    nombre = models.CharField(max_length=250, unique=True)
 
     class Meta:
+        abstract = True
+        ordering = ['nombre']
+
+    def __str__(self):
+        return self.nombre
+
+
+class CatalogoParticipante(CatalogoBase):
+    class Meta(CatalogoBase.Meta):
         verbose_name = "Participante"
         verbose_name_plural = "Participantes"
 
-    def __str__(self):
-        return self.nombre
 
-class CatalogoObjetivos(models.Model):
-    nombre = models.CharField(max_length=250)
-
-    class Meta:
+class CatalogoObjetivos(CatalogoBase):
+    class Meta(CatalogoBase.Meta):
         verbose_name = "Objetivo"
         verbose_name_plural = "Objetivos"
 
-    def __str__(self):
-        return self.nombre
 
-class CatalogoAgenda(models.Model):
-    nombre = models.CharField(max_length=250)
-
-    class Meta:
+class CatalogoAgenda(CatalogoBase):
+    class Meta(CatalogoBase.Meta):
         verbose_name = "Agenda"
         verbose_name_plural = "Agendas"
 
-    def __str__(self):
-        return self.nombre
 
-class CatalogoHallazgo(models.Model):
-    nombre = models.CharField(max_length=250)
-
-    class Meta:
+class CatalogoHallazgo(CatalogoBase):
+    class Meta(CatalogoBase.Meta):
         verbose_name = "Hallazgo"
         verbose_name_plural = "Hallazgos"
 
-    def __str__(self):
-        return self.nombre
 
-class CatalogoFortaleza(models.Model):
-    nombre = models.CharField(max_length=250)
-
-    class Meta:
+class CatalogoFortaleza(CatalogoBase):
+    class Meta(CatalogoBase.Meta):
         verbose_name = "Fortaleza"
         verbose_name_plural = "Fortalezas"
 
-    def __str__(self):
-        return self.nombre
 
-class CatalogoLimitacion(models.Model):
-    nombre = models.CharField(max_length=250)
-
-    class Meta:
+class CatalogoLimitacion(CatalogoBase):
+    class Meta(CatalogoBase.Meta):
         verbose_name = "Limitación"
         verbose_name_plural = "Limitaciones"
 
-    def __str__(self):
-        return self.nombre
 
-class CatalogoRecomendacion(models.Model):
-    nombre = models.CharField(max_length=250)
-
-    class Meta:
+class CatalogoRecomendacion(CatalogoBase):
+    class Meta(CatalogoBase.Meta):
         verbose_name = "Recomendación"
         verbose_name_plural = "Recomendaciones"
 
-    def __str__(self):
-        return self.nombre
 
 class Distrito(models.Model):
     nombre = models.CharField(max_length=255, unique=True)
 
-    def __str__(self):
-        return self.nombre
-    
     class Meta:
         verbose_name = "Distrito"
         verbose_name_plural = "Distritos"
+        ordering = ['nombre']
 
+    def __str__(self):
+        return self.nombre

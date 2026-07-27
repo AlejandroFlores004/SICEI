@@ -1,11 +1,28 @@
 from django.contrib import admin
 
-from catalogo.models import CatalogoAgenda, CatalogoFortaleza, CatalogoHallazgo, CatalogoLimitacion, CatalogoObjetivos, CatalogoParticipante
+from .models import (
+    CatalogoParticipante,
+    CatalogoObjetivos,
+    CatalogoAgenda,
+    CatalogoHallazgo,
+    CatalogoFortaleza,
+    CatalogoLimitacion,
+    CatalogoRecomendacion,
+    Distrito,
+)
 
-# Register your models here.
-admin.site.register(CatalogoParticipante)
-admin.site.register(CatalogoObjetivos)
-admin.site.register(CatalogoAgenda)
-admin.site.register(CatalogoHallazgo)
-admin.site.register(CatalogoFortaleza)
-admin.site.register(CatalogoLimitacion)
+
+@admin.register(
+    CatalogoParticipante,
+    CatalogoObjetivos,
+    CatalogoAgenda,
+    CatalogoHallazgo,
+    CatalogoFortaleza,
+    CatalogoLimitacion,
+    CatalogoRecomendacion,
+    Distrito,
+)
+class CatalogoAdmin(admin.ModelAdmin):
+    """Un solo ModelAdmin reutilizado para todos los catálogos simples."""
+    list_display = ('nombre',)
+    search_fields = ('nombre',)
