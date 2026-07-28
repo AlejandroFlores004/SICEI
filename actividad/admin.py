@@ -9,6 +9,7 @@ from .models import (
     Fortaleza,
     Limitacion,
     Recomendacion,
+    Actividad,
     Otros,
 )
 
@@ -57,15 +58,20 @@ class OtrosInline(admin.TabularInline):
     model = Otros
     extra = 1
 
+class ActividadInline(admin.TabularInline):
+    model = Actividad
+    extra = 1
+
 
 @admin.register(Informe)
 class InformeAdmin(admin.ModelAdmin):
-    list_display = ('escuela', 'actividad', 'fecha')
+    list_display = ('escuela', 'fecha')
     list_filter = ('escuela__distrito', 'fecha')
     search_fields = ('actividad', 'escuela__nombre', 'escuela__nombre_corto')
     date_hierarchy = 'fecha'
     # Todo lo relacionado a un Informe se crea/edita en la misma pantalla
     inlines = [
+        ActividadInline,
         AgendaInline,
         ParticipanteInline,
         ObjetivoInline,
