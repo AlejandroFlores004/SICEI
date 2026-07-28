@@ -57,6 +57,12 @@ class CatalogoRecomendacion(CatalogoBase):
         verbose_name = "Recomendación"
         verbose_name_plural = "Recomendaciones"
 
+class CatalogoActividad(CatalogoBase):
+    class Meta(CatalogoBase.Meta):
+        verbose_name = "Actividad"
+        verbose_name_plural = "Actividades"
+
+
 
 class Distrito(models.Model):
     nombre = models.CharField(max_length=255, unique=True)

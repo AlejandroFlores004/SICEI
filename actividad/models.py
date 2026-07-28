@@ -8,11 +8,11 @@ from catalogo.models import (
     CatalogoLimitacion,
     CatalogoObjetivos,
     CatalogoRecomendacion,
+    CatalogoActividad
 )
 
 
 class Informe(models.Model):
-    actividad = models.TextField()
     fecha = models.DateField()
     escuela = models.ForeignKey(Escuela, on_delete=models.CASCADE, related_name='informes')
 
@@ -55,6 +55,14 @@ class Objetivo(models.Model):
         return str(self.objetivo)
 
 
+class Actividad(models.Model):
+    actividad = models.ForeignKey(CatalogoActividad, on_delete=models.CASCADE, related_name='actividades')
+    descripcion = models.TextField()
+    informe = models.ForeignKey(Informe, on_delete=models.CASCADE, related_name='actividades')
+    
+    def __str__(self):
+        return str(self.actividad)
+
 class Agenda(models.Model):
     agenda = models.ForeignKey(CatalogoAgenda, on_delete=models.CASCADE, related_name='agendas')
     descripcion = models.TextField()
@@ -66,6 +74,7 @@ class Agenda(models.Model):
 
 class Hallazgo(models.Model):
     hallazgo = models.ForeignKey(CatalogoHallazgo, on_delete=models.CASCADE, related_name='hallazgos')
+    descripcion = models.TextField()
     informe = models.ForeignKey(Informe, on_delete=models.CASCADE, related_name='hallazgos')
 
     def __str__(self):

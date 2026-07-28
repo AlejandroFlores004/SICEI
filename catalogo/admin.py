@@ -8,6 +8,7 @@ from .models import (
     CatalogoFortaleza,
     CatalogoLimitacion,
     CatalogoRecomendacion,
+    CatalogoActividad,
     Distrito,
 )
 
@@ -20,6 +21,7 @@ from .models import (
     CatalogoFortaleza,
     CatalogoLimitacion,
     CatalogoRecomendacion,
+    CatalogoActividad,
     Distrito,
 )
 class CatalogoAdmin(admin.ModelAdmin):
