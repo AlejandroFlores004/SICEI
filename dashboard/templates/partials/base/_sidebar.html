@@ -24,124 +24,96 @@
     <!-- Menu -->
     <ul class="menu w-full grow">
 
-      <!-- Escuelas -->
+      <!-- Organización (dropdown) -->
       <li>
-        <a href="#"
-           class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-           data-tip="Escuelas">
-          <svg xmlns="http://www.w3.org/2000/svg"
-               viewBox="0 0 24 24"
-               stroke-linejoin="round"
-               stroke-linecap="round"
-               stroke-width="2"
-               fill="none"
-               stroke="currentColor"
-               class="my-1.5 inline-block size-4">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-            <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/>
-          </svg>
-          <span class="is-drawer-close:hidden">Escuelas</span>
-        </a>
+        <details>
+          <summary class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Organización">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2"
+                fill="none"
+                stroke="currentColor"
+                class="my-1.5 inline-block size-4">
+              <!-- building/org icon -->
+              <rect x="4" y="2" width="16" height="20" rx="1"/>
+              <line x1="8" y1="6" x2="8" y2="6.01"/>
+              <line x1="12" y1="6" x2="12" y2="6.01"/>
+              <line x1="16" y1="6" x2="16" y2="6.01"/>
+              <line x1="8" y1="10" x2="8" y2="10.01"/>
+              <line x1="12" y1="10" x2="12" y2="10.01"/>
+              <line x1="16" y1="10" x2="16" y2="10.01"/>
+              <line x1="8" y1="14" x2="8" y2="14.01"/>
+              <line x1="12" y1="14" x2="12" y2="14.01"/>
+              <line x1="16" y1="14" x2="16" y2="14.01"/>
+              <path d="M9 22v-3h6v3"/>
+            </svg>
+            <span class="is-drawer-close:hidden">Organización</span>
+          </summary>
+          <ul class="is-drawer-close:hidden">
+            <li><a href="#">Escuelas</a></li>
+            <li><a href="#">Monitores</a></li>
+            <li><a href="#">Cargos</a></li>
+          </ul>
+        </details>
       </li>
 
-      <li class="my-1.5">
-        <div class="divider my-0 opacity-40 is-drawer-close:mx-1"></div>
+      <!-- Catálogos (dropdown) -->
+      <li>
+        <details>
+          <summary class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Catálogos">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2"
+                fill="none"
+                stroke="currentColor"
+                class="my-1.5 inline-block size-4">
+              <!-- list/catalog icon -->
+              <path d="M9 6h11"/>
+              <path d="M9 12h11"/>
+              <path d="M9 18h11"/>
+              <path d="M4 6h.01"/>
+              <path d="M4 12h.01"/>
+              <path d="M4 18h.01"/>
+            </svg>
+            <span class="is-drawer-close:hidden">Catálogos</span>
+          </summary>
+          <ul class="is-drawer-close:hidden">
+            <li><a href="#">Tipos de Documento</a></li>
+            <li><a href="#">Monedas</a></li>
+            <li><a href="#">Categorías</a></li>
+          </ul>
+        </details>
       </li>
 
-      <!-- Programación -->
+      <!-- Actividades -->
       <li>
         <a href="#"
-           class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-           data-tip="Programación">
+          class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+          data-tip="Actividades">
           <svg xmlns="http://www.w3.org/2000/svg"
-               viewBox="0 0 24 24"
-               stroke-linejoin="round"
-               stroke-linecap="round"
-               stroke-width="2"
-               fill="none"
-               stroke="currentColor"
-               class="my-1.5 inline-block size-4">
+              viewBox="0 0 24 24"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2"
+              fill="none"
+              stroke="currentColor"
+              class="my-1.5 inline-block size-4">
+            <!-- calendar-check / activity icon -->
             <rect x="3" y="4" width="18" height="18" rx="2"/>
             <line x1="16" y1="2" x2="16" y2="6"/>
             <line x1="8" y1="2" x2="8" y2="6"/>
             <line x1="3" y1="10" x2="21" y2="10"/>
+            <path d="m9 16 2 2 4-4"/>
           </svg>
-          <span class="is-drawer-close:hidden">Programación</span>
+          <span class="is-drawer-close:hidden">Actividades</span>
         </a>
       </li>
-
-      <li class="my-1.5">
-        <div class="divider my-0 opacity-40 is-drawer-close:mx-1"></div>
-      </li>
-
-      <!-- Liquidaciones -->
-      <li>
-        <a href="#"
-          class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-          data-tip="Liquidaciones">
-          <svg xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke-width="2"
-              fill="none"
-              stroke="currentColor"
-              class="my-1.5 inline-block size-4">
-            <!-- receipt icon -->
-            <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/>
-            <path d="M16 8h-6"/>
-            <path d="M16 12h-6"/>
-            <path d="M13 16h-3"/>
-          </svg>
-          <span class="is-drawer-close:hidden">Liquidaciones</span>
-        </a>
-      </li>
-
-      <!-- Asignaciones -->
-      <li>
-        <a href="#"
-          class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-          data-tip="Asignaciones">
-          <svg xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke-width="2"
-              fill="none"
-              stroke="currentColor"
-              class="my-1.5 inline-block size-4">
-            <!-- coins icon -->
-            <circle cx="8" cy="8" r="6"/>
-            <path d="M18.09 10.37A6 6 0 1 1 10.34 18"/>
-            <path d="M7 6h1v4"/>
-            <path d="m16.71 13.88.7.71-2.82 2.82"/>
-          </svg>
-          <span class="is-drawer-close:hidden">Asignaciones</span>
-        </a>
-      </li>
-
-      <!-- Transferencias -->
-      <li>
-        <a href="#"
-          class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-          data-tip="Transferencias">
-          <svg xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke-width="2"
-              fill="none"
-              stroke="currentColor"
-              class="my-1.5 inline-block size-4">
-            <!-- banknote icon -->
-            <rect width="20" height="12" x="2" y="6" rx="2"/>
-            <circle cx="12" cy="12" r="2"/>
-            <path d="M6 12h.01M18 12h.01"/>
-          </svg>
-          <span class="is-drawer-close:hidden">Transferencias</span>
-        </a>
-      </li>
-
       <li class="my-1.5">
         <div class="divider my-0 opacity-40 is-drawer-close:mx-1"></div>
       </li>
@@ -165,7 +137,6 @@
           <span class="is-drawer-close:hidden">Sitio Desarrollo</span>
         </a>
       </li>
-
     </ul>
   </div>
 </div>
