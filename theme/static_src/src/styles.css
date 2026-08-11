@@ -9,3 +9,24 @@
   * the scope of this path.
   */
 @source "../../../**/*.{html,py,js}";
+
+/* Persistent dashboard sidebar: on desktop it sits in-flow (pinned) while
+   open, and fully collapses (no reserved width) while closed, instead of
+   daisyUI's default off-canvas overlay behaviour. */
+.app-drawer > .drawer-toggle:checked ~ .drawer-side {
+  @media (width >= 1024px) {
+    position: sticky;
+    top: 0;
+  }
+}
+.app-drawer > .drawer-toggle:not(:checked) ~ .drawer-side {
+  @media (width >= 1024px) {
+    width: 0;
+  }
+}
+.app-drawer > .drawer-toggle:checked ~ .drawer-side > .drawer-overlay {
+  @media (width >= 1024px) {
+    background-color: transparent;
+    cursor: default;
+  }
+}
