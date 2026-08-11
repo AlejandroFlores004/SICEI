@@ -1,101 +1,28 @@
 {% load static %}
-<div class="drawer-side is-drawer-close:overflow-visible">
+<div class="drawer-side">
   <label for="main-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
 
-  <div class="flex min-h-full flex-col bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
+  <div class="flex h-full w-64 flex-col bg-base-200 border-r border-base-300">
 
     <!-- Sidebar Header -->
-    <div class="border-b border-base-300 p-3">
-      <div class="flex items-center gap-3">
-        <!-- Logo -->
-        <div class="flex size-10 shrink-0 items-center justify-center">
-          <img src="{% static 'img/logo.png' %}" alt="Favicon"
-              class="size-9 object-contain"/>
-        </div>
+    <div class="flex items-center gap-3 border-b border-base-300 p-3">
+      <div class="flex size-10 shrink-0 items-center justify-center">
+        <img src="{% static 'img/logo.png' %}" alt="Favicon"
+            class="size-9 object-contain"/>
+      </div>
 
-        <!-- Title (hidden when collapsed) -->
-        <div class="is-drawer-close:hidden">
-          <h2 class="font-semibold leading-tight tracking-tight">Sistema de Información de Centros Escolares Intervenidos</h2>
-          <p class="text-xs opacity-70">(SICEI)</p>
-        </div>
+      <div class="min-w-0">
+        <h2 class="font-semibold text-sm leading-tight tracking-tight break-words">Sistema de Información de Centros Escolares Intervenidos</h2>
+        <p class="text-xs opacity-70">(SICEI)</p>
       </div>
     </div>
 
     <!-- Menu -->
-    <ul class="menu w-full grow">
+    <ul class="menu w-full grow flex-nowrap overflow-y-auto">
 
-      <!-- Organización (dropdown) -->
-      <li>
-        <details>
-          <summary class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Organización">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                stroke-width="2"
-                fill="none"
-                stroke="currentColor"
-                class="my-1.5 inline-block size-4">
-              <!-- building/org icon -->
-              <rect x="4" y="2" width="16" height="20" rx="1"/>
-              <line x1="8" y1="6" x2="8" y2="6.01"/>
-              <line x1="12" y1="6" x2="12" y2="6.01"/>
-              <line x1="16" y1="6" x2="16" y2="6.01"/>
-              <line x1="8" y1="10" x2="8" y2="10.01"/>
-              <line x1="12" y1="10" x2="12" y2="10.01"/>
-              <line x1="16" y1="10" x2="16" y2="10.01"/>
-              <line x1="8" y1="14" x2="8" y2="14.01"/>
-              <line x1="12" y1="14" x2="12" y2="14.01"/>
-              <line x1="16" y1="14" x2="16" y2="14.01"/>
-              <path d="M9 22v-3h6v3"/>
-            </svg>
-            <span class="is-drawer-close:hidden">Organización</span>
-          </summary>
-          <ul class="is-drawer-close:hidden">
-            <li><a href="#">Escuelas</a></li>
-            <li><a href="#">Monitores</a></li>
-            <li><a href="#">Cargos</a></li>
-          </ul>
-        </details>
-      </li>
-
-      <!-- Catálogos (dropdown) -->
-      <li>
-        <details>
-          <summary class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Catálogos">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                stroke-width="2"
-                fill="none"
-                stroke="currentColor"
-                class="my-1.5 inline-block size-4">
-              <!-- list/catalog icon -->
-              <path d="M9 6h11"/>
-              <path d="M9 12h11"/>
-              <path d="M9 18h11"/>
-              <path d="M4 6h.01"/>
-              <path d="M4 12h.01"/>
-              <path d="M4 18h.01"/>
-            </svg>
-            <span class="is-drawer-close:hidden">Catálogos</span>
-          </summary>
-          <ul class="is-drawer-close:hidden">
-            <li><a href="#">Tipos de Documento</a></li>
-            <li><a href="#">Monedas</a></li>
-            <li><a href="#">Categorías</a></li>
-          </ul>
-        </details>
-      </li>
-
-      <!-- Actividades -->
-      <li>
-        <a href="#"
-          class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-          data-tip="Actividades">
+      <!-- Organización -->
+      <li class="menu-title text-base-content! font-bold!">
+        <span class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               stroke-linejoin="round"
@@ -103,7 +30,88 @@
               stroke-width="2"
               fill="none"
               stroke="currentColor"
-              class="my-1.5 inline-block size-4">
+              class="size-4">
+            <!-- building/org icon -->
+            <rect x="4" y="2" width="16" height="20" rx="1"/>
+            <line x1="8" y1="6" x2="8" y2="6.01"/>
+            <line x1="12" y1="6" x2="12" y2="6.01"/>
+            <line x1="16" y1="6" x2="16" y2="6.01"/>
+            <line x1="8" y1="10" x2="8" y2="10.01"/>
+            <line x1="12" y1="10" x2="12" y2="10.01"/>
+            <line x1="16" y1="10" x2="16" y2="10.01"/>
+            <line x1="8" y1="14" x2="8" y2="14.01"/>
+            <line x1="12" y1="14" x2="12" y2="14.01"/>
+            <line x1="16" y1="14" x2="16" y2="14.01"/>
+            <path d="M9 22v-3h6v3"/>
+          </svg>
+          Organización
+        </span>
+      </li>
+      <li><a href="#">Escuelas</a></li>
+      <li><a href="#">Monitores</a></li>
+      <li><a href="#">Cargos</a></li>
+      <li><a href="#">Clusters</a></li>
+      <li class="menu-title text-base-content! font-bold!">
+        <span class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2"
+              fill="none"
+              stroke="currentColor"
+              class="size-4">
+            <!-- list/catalog icon -->
+            <path d="M9 6h11"/>
+            <path d="M9 12h11"/>
+            <path d="M9 18h11"/>
+            <path d="M4 6h.01"/>
+            <path d="M4 12h.01"/>
+            <path d="M4 18h.01"/>
+          </svg>
+          Catálogos
+        </span>
+      </li>
+      <li><a href="#">Agregar</a></li>
+
+      <!-- Administración -->
+      <li class="menu-title text-base-content! font-bold!">
+        <span class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2"
+              fill="none"
+              stroke="currentColor"
+              class="size-4">
+            <!-- users/roles icon -->
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Administración
+        </span>
+      </li>
+      <li><a href="#">Usuarios</a></li>
+      <li><a href="#">Roles</a></li>
+
+      <li class="my-1.5">
+        <div class="divider my-0 opacity-40"></div>
+      </li>
+
+      <!-- Generar Informe -->
+      <li>
+        <a href="#" class="font-bold">
+          <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2"
+              fill="none"
+              stroke="currentColor"
+              class="size-4">
             <!-- calendar-check / activity icon -->
             <rect x="3" y="4" width="18" height="18" rx="2"/>
             <line x1="16" y1="2" x2="16" y2="6"/>
@@ -111,17 +119,18 @@
             <line x1="3" y1="10" x2="21" y2="10"/>
             <path d="m9 16 2 2 4-4"/>
           </svg>
-          <span class="is-drawer-close:hidden">Actividades</span>
+          Informe de actividad
         </a>
       </li>
+
       <li class="my-1.5">
-        <div class="divider my-0 opacity-40 is-drawer-close:mx-1"></div>
+        <div class="divider my-0 opacity-40"></div>
       </li>
+
       <!-- Sitio desarrollo -->
       <li>
         <a href="{% url 'admin:index' %}"
-          class="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-          data-tip="Sitio Desarrollo">
+          class="{% if '/admin' in request.path %}menu-active{% endif %}">
           <svg xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               stroke-linejoin="round"
@@ -129,12 +138,12 @@
               stroke-width="2"
               fill="none"
               stroke="currentColor"
-              class="my-1.5 inline-block size-4">
+              class="size-4">
             <polyline points="8 9 4 12 8 15"/>
             <polyline points="16 9 20 12 16 15"/>
             <line x1="14" y1="4" x2="10" y2="20"/>
           </svg>
-          <span class="is-drawer-close:hidden">Sitio Desarrollo</span>
+          Sitio Desarrollo
         </a>
       </li>
     </ul>

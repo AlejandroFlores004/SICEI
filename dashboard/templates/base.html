@@ -14,8 +14,22 @@
   </head>
   <body>
 
-  <div class="drawer lg:drawer-open">
-    <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+  <div class="drawer app-drawer">
+    <input id="main-drawer" type="checkbox" class="drawer-toggle" checked />
+    <script>
+      (function () {
+        var drawer = document.getElementById('main-drawer');
+        var stored = localStorage.getItem('sidebarOpen');
+        if (stored !== null) {
+          drawer.checked = stored === 'true';
+        } else {
+          drawer.checked = window.matchMedia('(min-width: 1024px)').matches;
+        }
+        drawer.addEventListener('change', function () {
+          localStorage.setItem('sidebarOpen', drawer.checked);
+        });
+      })();
+    </script>
     <script src="{% static 'js/htmx.min.js' %}"></script>
     <!-- ===== MAIN CONTENT SIDE ===== -->
     <div class="drawer-content flex flex-col min-h-screen">
