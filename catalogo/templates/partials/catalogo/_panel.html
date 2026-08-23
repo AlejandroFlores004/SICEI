@@ -1,0 +1,70 @@
+<div id="catalogo-panel">
+  <div class="card bg-base-100 border border-base-300 shadow-sm">
+    <div class="card-body p-4 sm:p-6">
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div>
+          <h2 class="text-lg font-bold">{{ info.nombre }}</h2>
+          <p class="text-xs text-base-content/60">
+            {{ items|length }} registro{{ items|length|pluralize }}
+          </p>
+        </div>
+        <button
+          class="btn btn-primary btn-sm gap-1 self-start sm:self-auto"
+          hx-get="{% url 'catalogo_create' slug %}"
+          hx-target="#catalogo-modal-content"
+          hx-swap="innerHTML"
+          onclick="document.getElementById('catalogo_modal').showModal()"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+              stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="size-4">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          Agregar {{ info.singular }}
+        </button>
+      </div>
+
+      {% if items %}
+      <div class="rounded-box border border-base-300">
+        <table class="table table-zebra">
+          <thead>
+            <tr class="bg-base-200">
+              <th>Nombre</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td class="font-medium">{{ item.nombre }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="flex flex-col items-center justify-center gap-2 py-12 text-center border border-dashed border-base-300 rounded-box">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+            stroke-linecap="round" stroke-width="1.5" fill="none" stroke="currentColor" class="size-10 text-base-content/30">
+          <path d="M9 6h11"/>
+          <path d="M9 12h11"/>
+          <path d="M9 18h11"/>
+          <path d="M4 6h.01"/>
+          <path d="M4 12h.01"/>
+          <path d="M4 18h.01"/>
+        </svg>
+        <p class="text-sm text-base-content/60">Todavía no hay registros en este catálogo.</p>
+        <button
+          class="btn btn-primary btn-sm mt-1"
+          hx-get="{% url 'catalogo_create' slug %}"
+          hx-target="#catalogo-modal-content"
+          hx-swap="innerHTML"
+          onclick="document.getElementById('catalogo_modal').showModal()"
+        >
+          Agregar {{ info.singular }}
+        </button>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>

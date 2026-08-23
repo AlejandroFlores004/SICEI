@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'easyaudit',
     'django_htmx',
     'django_select2',
+    'django_browser_reload',
     'catalogo',
     'organizacion',
     'actividad',
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'sicei.urls'

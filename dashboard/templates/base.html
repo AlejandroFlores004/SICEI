@@ -12,7 +12,7 @@
     {% block extra_head %}{% endblock %}
     <link rel="stylesheet" href="{% static 'css/select2-daisy.css' %}">
   </head>
-  <body>
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
   <div class="drawer app-drawer">
     <input id="main-drawer" type="checkbox" class="drawer-toggle" checked />
@@ -72,6 +72,5 @@
   {% include 'partials/base/_logout.html' %}
   {% include 'partials/base/_messages.html' %}
 
-  
   </body>
 </html>
