@@ -24,6 +24,11 @@ class Informe(models.Model):
     def __str__(self):
         return f"{self.escuela.nombre_corto} - {self.fecha}"
 
+    @property
+    def nombre_actividad(self):
+        nombres = [a.actividad.nombre for a in self.actividades.all()]
+        return ", ".join(nombres) if nombres else "Sin actividad"
+
 
 class Acuerdo(models.Model):
     nombre = models.CharField(max_length=250)

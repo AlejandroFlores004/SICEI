@@ -1,0 +1,97 @@
+<div id="informe-lista">
+  <div class="card bg-base-100 border border-base-300 shadow-sm">
+    <div class="card-body p-4 sm:p-6">
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div>
+          <h2 class="text-lg font-bold">Informes registrados</h2>
+          <p class="text-xs text-base-content/60">
+            {{ informes|length }} informe{{ informes|length|pluralize }}
+          </p>
+        </div>
+        <a href="{% url 'informe_create' %}" class="btn btn-primary btn-sm gap-1 self-start sm:self-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+              stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="size-4">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          Nuevo informe
+        </a>
+      </div>
+
+      {% if informes %}
+      <div class="rounded-box border border-base-300 overflow-x-auto">
+        <table class="table table-zebra">
+          <thead>
+            <tr class="bg-base-200">
+              <th>Actividad</th>
+              <th>Escuela</th>
+              <th class="text-right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for informe in informes %}
+            <tr>
+              <td class="font-medium">{{ informe.nombre_actividad }}</td>
+              <td>{{ informe.escuela.nombre_corto }}</td>
+              <td>
+                <div class="flex justify-end gap-1">
+                  <button
+                    class="btn btn-ghost btn-sm btn-square"
+                    title="Ver"
+                    hx-get="{% url 'informe_detalle' informe.pk %}"
+                    hx-target="#informe-modal-content"
+                    hx-swap="innerHTML"
+                    onclick="document.getElementById('informe_modal').showModal()"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+                        stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="size-4">
+                      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                  <a href="{% url 'informe_update' informe.pk %}" class="btn btn-ghost btn-sm btn-square" title="Editar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+                        stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="size-4">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                      <path d="m15 5 4 4"/>
+                    </svg>
+                  </a>
+                  <button
+                    class="btn btn-ghost btn-sm btn-square text-error"
+                    title="Eliminar"
+                    hx-post="{% url 'informe_delete' informe.pk %}"
+                    hx-target="#informe-lista"
+                    hx-swap="outerHTML"
+                    hx-confirm="¿Deseas eliminar este informe? Esta acción no se puede deshacer."
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+                        stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="size-4">
+                      <path d="M3 6h18"/>
+                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="flex flex-col items-center justify-center gap-2 py-12 text-center border border-dashed border-base-300 rounded-box">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+            stroke-linecap="round" stroke-width="1.5" fill="none" stroke="currentColor" class="size-10 text-base-content/30">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <p class="text-sm text-base-content/60">Todavía no hay informes registrados.</p>
+        <a href="{% url 'informe_create' %}" class="btn btn-primary btn-sm mt-1">Nuevo informe</a>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
