@@ -16,6 +16,7 @@ from .models import (
 )
 
 CATALOGOS = {
+    'actividades': {'model': CatalogoActividad, 'nombre': 'Actividades', 'singular': 'Actividad'},
     'participantes': {'model': CatalogoParticipante, 'nombre': 'Participantes', 'singular': 'Participante'},
     'objetivos': {'model': CatalogoObjetivos, 'nombre': 'Objetivos', 'singular': 'Objetivo'},
     'agenda': {'model': CatalogoAgenda, 'nombre': 'Agenda', 'singular': 'Punto de agenda'},
@@ -23,7 +24,6 @@ CATALOGOS = {
     'fortalezas': {'model': CatalogoFortaleza, 'nombre': 'Fortalezas', 'singular': 'Fortaleza'},
     'limitaciones': {'model': CatalogoLimitacion, 'nombre': 'Limitaciones', 'singular': 'Limitación'},
     'recomendaciones': {'model': CatalogoRecomendacion, 'nombre': 'Recomendaciones', 'singular': 'Recomendación'},
-    'actividades': {'model': CatalogoActividad, 'nombre': 'Actividades', 'singular': 'Actividad'},
 }
 
 NOMBRE_WIDGET = TextInput(attrs={
@@ -57,7 +57,7 @@ def _trigger_header(mensaje, tipo='success', cerrar_modal=False):
 
 
 def catalogo_home(request):
-    slug_activo = 'participantes'
+    slug_activo = 'actividades'
     breadcrumbs = [
         {'name': 'Inicio', 'url': '/'},
         {'name': 'Catálogos', 'url': None},
