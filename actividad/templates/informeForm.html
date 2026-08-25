@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}{% if informe %}Editar informe{% else %}Nuevo informe{% endif %}{% endblock %}
+
+{% block extra_head %}
+  {{ form.media.css }}
+{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <h1 class="text-xl font-bold">{% if informe %}Editar informe{% else %}Nuevo informe{% endif %}</h1>
+  <p class="text-sm text-base-content/60">Completa la información del informe de supervisión educativa.</p>
+</div>
+
+<form method="post" class="space-y-5">
+  {% csrf_token %}
+
+  <!-- Generalidades -->
+  <div class="card bg-base-100 border border-base-300 shadow-sm">
+    <div class="card-body p-4 sm:p-6">
+      <h2 class="text-lg font-bold mb-4">Generalidades</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+          <label class="label" for="{{ form.fecha.id_for_label }}">
+            <span class="label-text">Fecha</span>
+          </label>
+          {{ form.fecha }}
+          {% if form.fecha.errors %}
+            <span class="label-text-alt text-error text-xs">{{ form.fecha.errors|striptags }}</span>
+          {% endif %}
+        </div>
+        <div class="form-control w-full">
+          <label class="label" for="{{ form.escuela.id_for_label }}">
+            <span class="label-text">Institución (escuela)</span>
+          </label>
+          {{ form.escuela }}
+          {% if form.escuela.errors %}
+            <span class="label-text-alt text-error text-xs">{{ form.escuela.errors|striptags }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secciones dinámicas -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start">
+    {% for seccion in secciones %}
+      {% include "partials/actividad/_formset_section.html" with formset=seccion.formset titulo=seccion.titulo boton=seccion.boton %}
+    {% endfor %}
+  </div>
+
+  <div class="flex justify-end gap-2 pb-6">
+    <a href="{% url 'actividad_home' %}" class="btn btn-ghost">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Guardar informe</button>
+  </div>
+</form>
+
+{{ form.media.js }}
+<script>
+  function agregarFilaFormset(prefix) {
+    var totalInput = document.getElementById('id_' + prefix + '-TOTAL_FORMS');
+    var template = document.getElementById(prefix + '-empty-template');
+    var rowsContainer = document.getElementById(prefix + '-rows');
+    if (!totalInput || !template || !rowsContainer) return;
+
+    var emptyMsg = rowsContainer.querySelector('[data-empty-msg]');
+    if (emptyMsg) emptyMsg.remove();
+
+    var index = parseInt(totalInput.value, 10);
+    var html = template.innerHTML.split('__prefix__').join(index);
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = html.trim();
+    var newRow = wrapper.firstElementChild;
+    rowsContainer.appendChild(newRow);
+    totalInput.value = index + 1;
+
+    // Let django-select2 initialize the select2 widgets inside the new row.
+    newRow.dispatchEvent(new CustomEvent('formset:added', { bubbles: true }));
+  }
+
+  function eliminarFilaFormset(button) {
+    var row = button.closest('[data-formset-row]');
+    if (!row) return;
+    if (row.dataset.hasPk === 'true') {
+      var checkbox = row.querySelector('input[name$="-DELETE"]');
+      if (checkbox) checkbox.checked = true;
+      row.classList.add('hidden');
+    } else {
+      row.remove();
+    }
+  }
+</script>
+{% endblock %}

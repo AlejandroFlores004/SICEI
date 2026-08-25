@@ -1,0 +1,35 @@
+<div class="border border-base-300 rounded-box p-4 sm:p-5 bg-base-100">
+  <div class="flex items-center justify-between mb-3">
+    <h3 class="font-semibold text-base">{{ titulo }}</h3>
+    <button
+      type="button"
+      class="btn btn-outline btn-primary btn-xs gap-1"
+      onclick="agregarFilaFormset('{{ formset.prefix }}')"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+          stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="size-3.5">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      Agregar {{ boton }}
+    </button>
+  </div>
+
+  {{ formset.management_form }}
+  {% if formset.non_form_errors %}
+    <p class="text-xs text-error mb-2">{{ formset.non_form_errors|striptags }}</p>
+  {% endif %}
+
+  <div id="{{ formset.prefix }}-rows" class="space-y-2">
+    {% for form in formset %}
+      {% include "partials/actividad/_formset_row.html" %}
+    {% empty %}
+      <p class="text-xs text-base-content/50 italic" data-empty-msg>Sin registros. Usa "Agregar" para incluir uno.</p>
+    {% endfor %}
+  </div>
+
+  <div class="hidden" id="{{ formset.prefix }}-empty-template">
+    {% with form=formset.empty_form %}
+      {% include "partials/actividad/_formset_row.html" %}
+    {% endwith %}
+  </div>
+</div>

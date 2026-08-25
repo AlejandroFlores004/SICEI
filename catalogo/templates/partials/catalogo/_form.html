@@ -1,0 +1,25 @@
+<h3 class="text-lg font-bold mb-4">Agregar {{ info.singular }}</h3>
+
+<form
+  hx-post="{% url 'catalogo_create' slug %}"
+  hx-target="#catalogo-modal-content"
+  hx-swap="innerHTML"
+  class="space-y-4"
+>
+  <div class="form-control w-full">
+    <label class="label" for="{{ form.nombre.id_for_label }}">
+      <span class="label-text">Nombre</span>
+    </label>
+    {{ form.nombre }}
+    {% if form.nombre.errors %}
+      <label class="label">
+        <span class="label-text-alt text-error">{{ form.nombre.errors|striptags }}</span>
+      </label>
+    {% endif %}
+  </div>
+
+  <div class="modal-action">
+    <button type="button" class="btn btn-ghost" onclick="document.getElementById('catalogo_modal').close()">Cancelar</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+</form>

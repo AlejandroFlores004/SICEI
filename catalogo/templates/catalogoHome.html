@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogos{% endblock %}
+
+{% block content %}
+<div id="toast-container" class="toast toast-top toast-center sm:toast-end z-50"></div>
+
+<div class="mb-4">
+  <h1 class="text-xl font-bold">Catálogos</h1>
+  <p class="text-sm text-base-content/60">Administra los valores utilizados en los informes de actividad.</p>
+</div>
+
+<div role="tablist" id="catalogo-tabs" class="tabs tabs-box mb-4 flex-wrap w-fit max-w-full">
+  {% for slug, info in catalogos.items %}
+  <a
+    role="tab"
+    data-slug="{{ slug }}"
+    class="tab {% if slug == slug_activo %}tab-active{% endif %}"
+    hx-get="{% url 'catalogo_panel' slug %}"
+    hx-target="#catalogo-panel"
+    hx-swap="outerHTML"
+    onclick="activarCatalogoTab(this)"
+  >
+    {{ info.nombre }}
+  </a>
+  {% endfor %}
+</div>
+
+{% include "partials/catalogo/_panel.html" %}
+
+<!-- ===== MODAL COMPARTIDO: AGREGAR / EDITAR ===== -->
+<dialog id="catalogo_modal" class="modal">
+  <div id="catalogo-modal-content" class="modal-box w-11/12 max-w-md">
+    <!-- El formulario se carga aquí vía HTMX -->
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<script>
+  function activarCatalogoTab(el) {
+    document.querySelectorAll('#catalogo-tabs a').forEach(function (a) {
+      a.classList.remove('tab-active');
+    });
+    el.classList.add('tab-active');
+  }
+
+  function mostrarToastCatalogo(mensaje, tipo) {
+    var container = document.getElementById('toast-container');
+    if (!container) return;
+    var claseAlerta = tipo === 'error' ? 'alert-error' : tipo === 'warning' ? 'alert-warning' : 'alert-success';
+    var alerta = document.createElement('div');
+    alerta.className = 'alert ' + claseAlerta + ' shadow-lg text-sm';
+    var span = document.createElement('span');
+    span.textContent = mensaje;
+    alerta.appendChild(span);
+    container.appendChild(alerta);
+    setTimeout(function () {
+      alerta.remove();
+    }, 3500);
+  }
+
+  document.body.addEventListener('catalogoAccion', function (evt) {
+    var detalle = evt.detail || {};
+    if (detalle.cerrarModal) {
+      document.getElementById('catalogo_modal').close();
+    }
+    if (detalle.mensaje) {
+      mostrarToastCatalogo(detalle.mensaje, detalle.tipo);
+    }
+  });
+</script>
+{% endblock %}

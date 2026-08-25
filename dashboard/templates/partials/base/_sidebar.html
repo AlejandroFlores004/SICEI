@@ -72,7 +72,7 @@
           Catálogos
         </span>
       </li>
-      <li><a href="#">Agregar</a></li>
+      <li><a href="{% url 'catalogo_home' %}" class="hover:bg-base-300">Gestionar</a></li>
 
       <!-- Administración -->
       <li class="menu-title text-base-content! font-bold!">
@@ -103,7 +103,7 @@
 
       <!-- Generar Informe -->
       <li>
-        <a href="#" class="font-bold">
+        <a href="{% url 'actividad_home' %}" class="font-bold">
           <svg xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               stroke-linejoin="round"

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Informe de actividad{% endblock %}
+
+{% block content %}
+<div id="toast-container" class="toast toast-top toast-center sm:toast-end z-50"></div>
+
+<div class="mb-4">
+  <h1 class="text-xl font-bold">Informe de actividad</h1>
+  <p class="text-sm text-base-content/60">Administra los informes de supervisión educativa registrados.</p>
+</div>
+
+{% include "partials/actividad/_lista.html" %}
+
+<!-- ===== MODAL: VER INFORME ===== -->
+<dialog id="informe_modal" class="modal">
+  <div id="informe-modal-content" class="modal-box w-11/12 max-w-3xl">
+    <!-- El detalle se carga aquí vía HTMX -->
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<script>
+  function mostrarToastInforme(mensaje, tipo) {
+    var container = document.getElementById('toast-container');
+    if (!container) return;
+    var claseAlerta = tipo === 'error' ? 'alert-error' : tipo === 'warning' ? 'alert-warning' : 'alert-success';
+    var alerta = document.createElement('div');
+    alerta.className = 'alert ' + claseAlerta + ' shadow-lg text-sm';
+    var span = document.createElement('span');
+    span.textContent = mensaje;
+    alerta.appendChild(span);
+    container.appendChild(alerta);
+    setTimeout(function () {
+      alerta.remove();
+    }, 3500);
+  }
+
+  document.body.addEventListener('informeAccion', function (evt) {
+    var detalle = evt.detail || {};
+    if (detalle.mensaje) {
+      mostrarToastInforme(detalle.mensaje, detalle.tipo);
+    }
+  });
+</script>
+{% endblock %}

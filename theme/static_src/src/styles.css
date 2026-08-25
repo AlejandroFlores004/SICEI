@@ -30,3 +30,13 @@
     cursor: default;
   }
 }
+
+/* Because the sidebar is pinned in-flow on desktop (not an off-canvas
+   overlay), it shouldn't trigger daisyUI's automatic page-scroll lock —
+   that lock is meant for the temporary mobile drawer only, and left the
+   whole page unscrollable on desktop whenever the sidebar was open. */
+@media (width >= 1024px) {
+  :root:has(.app-drawer > .drawer-toggle:checked) {
+    --page-scroll-lock: initial;
+  }
+}

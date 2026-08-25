@@ -1,0 +1,192 @@
+<div class="space-y-5">
+  <div>
+    <h3 class="text-lg font-bold">Informe de supervisión educativa</h3>
+    <p class="text-xs text-base-content/60">{{ informe.nombre_actividad }}</p>
+  </div>
+
+  <!-- Generalidades -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Generalidades</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 p-3 text-sm">
+      <div>
+        <span class="text-base-content/50 text-xs block">Institución</span>
+        {{ informe.escuela.nombre }}
+      </div>
+      <div>
+        <span class="text-base-content/50 text-xs block">Código de infraestructura</span>
+        {{ informe.escuela.codigo }}
+      </div>
+      <div>
+        <span class="text-base-content/50 text-xs block">Distrito</span>
+        {{ informe.escuela.distrito.nombre }}
+      </div>
+      <div>
+        <span class="text-base-content/50 text-xs block">Fecha</span>
+        {{ informe.fecha }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Actividades -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Actividades técnicas realizadas</div>
+    <div class="p-3 text-sm space-y-2">
+      {% for a in actividades %}
+        <div><span class="font-semibold">{{ a.actividad }}:</span> {{ a.descripcion }}</div>
+      {% empty %}
+        <p class="text-base-content/40 italic">Sin registros.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Participantes -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Cantidad de participantes</div>
+    {% if participantes %}
+    <div class="overflow-x-auto">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th class="text-right">Mujeres</th>
+            <th class="text-right">Hombres</th>
+            <th class="text-right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in participantes %}
+          <tr>
+            <td>{{ p.tipoParticipante }}</td>
+            <td class="text-right">{{ p.cantidadMujer }}</td>
+            <td class="text-right">{{ p.cantidadHombre }}</td>
+            <td class="text-right font-semibold">{{ p.cantidadMujer|add:p.cantidadHombre }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="p-3 text-sm text-base-content/40 italic">Sin registros.</p>
+    {% endif %}
+  </div>
+
+  <!-- Objetivos -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Objetivos de la visita</div>
+    <div class="p-3 text-sm">
+      {% if objetivos %}
+      <ul class="list-disc list-inside space-y-1">
+        {% for o in objetivos %}<li>{{ o.objetivo }}</li>{% endfor %}
+      </ul>
+      {% else %}
+      <p class="text-base-content/40 italic">Sin registros.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Agenda -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Agenda desarrollada</div>
+    <div class="p-3 text-sm space-y-2">
+      {% for a in agendas %}
+        <div><span class="font-semibold">{{ a.agenda }}:</span> {{ a.descripcion }}</div>
+      {% empty %}
+        <p class="text-base-content/40 italic">Sin registros.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Hallazgos -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Hallazgos de la visita</div>
+    <div class="p-3 text-sm space-y-2">
+      {% for h in hallazgos %}
+        <div><span class="font-semibold">{{ h.hallazgo }}:</span> {{ h.descripcion }}</div>
+      {% empty %}
+        <p class="text-base-content/40 italic">Sin registros.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Fortalezas -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Fortalezas</div>
+    <div class="p-3 text-sm space-y-2">
+      {% for f in fortalezas %}
+        <div><span class="font-semibold">{{ f.fortaleza }}:</span> {{ f.descripcion }}</div>
+      {% empty %}
+        <p class="text-base-content/40 italic">Sin registros.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Limitantes -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Limitantes u oportunidades de mejora</div>
+    <div class="p-3 text-sm space-y-2">
+      {% for l in limitaciones %}
+        <div><span class="font-semibold">{{ l.limitacion }}:</span> {{ l.descripcion }}</div>
+      {% empty %}
+        <p class="text-base-content/40 italic">Sin registros.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Recomendaciones -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Recomendaciones</div>
+    <div class="p-3 text-sm space-y-2">
+      {% for r in recomendaciones %}
+        <div><span class="font-semibold">{{ r.recomendacion }}:</span> {{ r.descripcion }}</div>
+      {% empty %}
+        <p class="text-base-content/40 italic">Sin registros.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Otros -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Otros</div>
+    <div class="p-3 text-sm space-y-2">
+      {% for o in otros %}
+        <p>{{ o.descripcion }}</p>
+      {% empty %}
+        <p class="text-base-content/40 italic">Sin registros.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Acuerdos -->
+  <div class="rounded-box border border-base-300 overflow-hidden">
+    <div class="bg-base-200 px-3 py-1.5 text-xs font-bold uppercase tracking-wide">Acuerdos</div>
+    {% if acuerdos %}
+    <div class="overflow-x-auto">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Acuerdo</th>
+            <th>Responsable</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ac in acuerdos %}
+          <tr>
+            <td>{{ ac.nombre }}</td>
+            <td>{{ ac.responsable }}</td>
+            <td>{{ ac.fecha }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="p-3 text-sm text-base-content/40 italic">Sin registros.</p>
+    {% endif %}
+  </div>
+
+  <div class="modal-action">
+    <a href="{% url 'informe_update' informe.pk %}" class="btn btn-primary btn-sm">Editar</a>
+    <button type="button" class="btn btn-ghost btn-sm" onclick="document.getElementById('informe_modal').close()">Cerrar</button>
+  </div>
+</div>
