@@ -3,6 +3,244 @@
 Dashboard
 {% endblock %}
 
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4" defer></script>
+{% endblock %}
+
 {% block content %}
-    Aquí deben de haber graficas y cosas así
+<div class="mb-4">
+  <h1 class="text-xl font-bold">Dashboard</h1>
+  <p class="text-sm text-base-content/60">Resumen de {{ mes_actual }}.</p>
+</div>
+
+<!-- ===== STATS ===== -->
+<div class="stats shadow w-full stats-vertical sm:stats-horizontal mb-6">
+  <div class="stat bg-success/5">
+    <div class="stat-figure text-success">
+      <div class="bg-success/15 rounded-full p-2.5">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6">
+          <path d="M9 12l2 2l4 -4" />
+          <circle cx="12" cy="12" r="9" />
+        </svg>
+      </div>
+    </div>
+    <div class="stat-title">Escuelas visitadas</div>
+    <div class="stat-value text-success">{{ escuelas_visitadas_count }}</div>
+    <div class="stat-desc">de {{ total_escuelas }} escuelas activas ({{ porcentaje_visitadas }}%)</div>
+  </div>
+
+  <div class="stat bg-error/5">
+    <div class="stat-figure text-error">
+      <div class="bg-error/15 rounded-full p-2.5">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 8v4" />
+          <path d="M12 16h.01" />
+        </svg>
+      </div>
+    </div>
+    <div class="stat-title">Sin visitar</div>
+    <div class="stat-value text-error">{{ escuelas_no_visitadas_count }}</div>
+    <div class="stat-desc">requieren seguimiento este mes</div>
+  </div>
+
+  <div class="stat bg-primary/5">
+    <div class="stat-figure text-primary">
+      <div class="bg-primary/15 rounded-full p-2.5">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6">
+          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+          <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+          <path d="M9 9l1 0" />
+          <path d="M9 13l6 0" />
+          <path d="M9 17l6 0" />
+        </svg>
+      </div>
+    </div>
+    <div class="stat-title">Informes registrados</div>
+    <div class="stat-value text-primary">{{ informes_mes_count }}</div>
+    <div class="stat-desc">este mes</div>
+  </div>
+</div>
+
+<!-- ===== PROGRESO DE COBERTURA ===== -->
+<div class="card bg-base-100 shadow mb-6 border-t-4 border-success">
+  <div class="card-body">
+    <h2 class="card-title text-base">Cobertura de escuelas — {{ mes_actual }}</h2>
+    <progress class="progress progress-success w-full" value="{{ porcentaje_visitadas }}" max="100"></progress>
+    <p class="text-sm text-base-content/60">{{ escuelas_visitadas_count }} de {{ total_escuelas }} escuelas visitadas ({{ porcentaje_visitadas }}%)</p>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+  <!-- ===== GRAFICO DE ACTIVIDADES ===== -->
+  <div class="card bg-base-100 shadow border-t-4 border-primary">
+    <div class="card-body">
+      <h2 class="card-title text-base">Actividades más repetidas</h2>
+      {% if actividades_labels %}
+      <div class="h-80">
+        <canvas id="actividadesChart"></canvas>
+      </div>
+      {% else %}
+      <p class="text-sm text-base-content/60">Aún no hay actividades registradas.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- ===== ESCUELAS SIN VISITAR ===== -->
+  <div class="card bg-base-100 shadow border-t-4 border-warning">
+    <div class="card-body">
+      <div class="flex items-center justify-between gap-2">
+        <h2 class="card-title text-base">Escuelas pendientes de visita</h2>
+        {% if escuelas_no_visitadas_count > 8 %}
+        <button
+          class="btn btn-xs btn-outline btn-warning"
+          hx-get="{% url 'escuelas_pendientes_modal' %}"
+          hx-target="#escuelas-modal-body"
+          hx-swap="innerHTML"
+          onclick="document.getElementById('escuelas_modal').showModal()"
+        >
+          Ver todas ({{ escuelas_no_visitadas_count }})
+        </button>
+        {% endif %}
+      </div>
+      {% if escuelas_no_visitadas %}
+      <div class="overflow-x-auto">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th class="whitespace-nowrap">Escuela</th>
+              <th class="whitespace-nowrap">Distrito</th>
+              <th class="whitespace-nowrap">Monitor</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for escuela in escuelas_no_visitadas %}
+            <tr class="hover:bg-warning/5">
+              <td class="whitespace-nowrap">{{ escuela.nombre_corto }}</td>
+              <td class="whitespace-nowrap">{{ escuela.distrito.nombre }}</td>
+              <td class="whitespace-nowrap">
+                {% if escuela.monitor %}
+                  {{ escuela.monitor }}
+                {% else %}
+                  <span class="badge badge-warning badge-outline badge-sm whitespace-nowrap">Sin asignar</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-sm text-success">¡Todas las escuelas activas fueron visitadas este mes!</p>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== AUDITORIA (django-easy-audit) ===== -->
+<div class="card bg-base-100 shadow mt-6 border-t-4 border-info">
+  <div class="card-body">
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="card-title text-base">Auditoría del sistema</h2>
+        <p class="text-sm text-base-content/60">Últimos cambios registrados por django-easy-audit (creaciones, ediciones y eliminaciones).</p>
+      </div>
+      <a href="#" class="btn btn-sm btn-outline btn-info">Ver detalle</a>
+    </div>
+
+    {% if eventos_auditoria %}
+    <div class="overflow-x-auto mt-2">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Evento</th>
+            <th>Modelo</th>
+            <th>Objeto</th>
+            <th>Usuario</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for evento in eventos_auditoria %}
+          <tr>
+            <td><span class="badge badge-sm {{ evento.tipo_badge }}">{{ evento.tipo_label }}</span></td>
+            <td class="capitalize">{{ evento.modelo }}</td>
+            <td>{{ evento.objeto|truncatechars:40 }}</td>
+            <td>{{ evento.usuario }}</td>
+            <td>{{ evento.fecha|date:"d/m/Y H:i" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-sm text-base-content/60 mt-2">Aún no hay eventos de auditoría registrados.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- ===== MODAL: ESCUELAS PENDIENTES ===== -->
+<dialog id="escuelas_modal" class="modal">
+  <div class="modal-box w-11/12 max-w-3xl">
+    <h3 class="text-lg font-bold mb-1">Escuelas pendientes de visita</h3>
+    <p class="text-xs text-base-content/60 mb-4">{{ mes_actual }}</p>
+
+    <div id="escuelas-modal-body">
+      <!-- se carga vía HTMX -->
+    </div>
+
+    <div class="modal-action">
+      <button type="button" class="btn btn-ghost btn-sm" onclick="document.getElementById('escuelas_modal').close()">Cerrar</button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+{{ actividades_labels|json_script:"actividades-labels" }}
+{{ actividades_data|json_script:"actividades-data" }}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var canvas = document.getElementById('actividadesChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+
+    var labels = JSON.parse(document.getElementById('actividades-labels').textContent);
+    var data = JSON.parse(document.getElementById('actividades-data').textContent);
+
+    var paleta = ['--color-primary', '--color-secondary', '--color-accent', '--color-info',
+      '--color-success', '--color-warning', '--color-error', '--color-neutral'];
+    var colores = labels.map(function (_, i) {
+      return 'color-mix(in oklab, var(' + paleta[i % paleta.length] + ') 80%, transparent)';
+    });
+
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Veces realizada',
+          data: data,
+          backgroundColor: colores,
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { beginAtZero: true, ticks: { precision: 0 } }
+        }
+      }
+    });
+  });
+</script>
 {% endblock %}
